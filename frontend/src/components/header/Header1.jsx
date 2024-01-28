@@ -1,19 +1,10 @@
-
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import SocialLinks from "./SocialLinks";
 import ColorIcon from "./ColorIcon";
-import SelectedMenu from "./SelectedMenu";
+import SelectedMenu from "./SelectMenu";
 
 const Header1 = () => {
-  const options = [
-    "EN",
-    "AR"
-  ];
+  const options = ["EN", "AR"];
   return (
     <Box
       sx={{

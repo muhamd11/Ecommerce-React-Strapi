@@ -10,9 +10,9 @@ import { Stack, Typography } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import SelectedMenu from "./SelectedMenu";
+import SelectedMenu from "./SelectMenu";
 import { useTheme } from "@emotion/react";
+import ProfileLinks from "./AccountMenu";
 
 const Header2 = () => {
   const options = ["All Categories", "Men", "Women", "Kids"];
@@ -25,10 +25,13 @@ const Header2 = () => {
     border: "2px solid #777",
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "100%",
+    minWidth: "270px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "auto",
+      width: "330px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
     },
   }));
 
@@ -101,7 +104,7 @@ const Header2 = () => {
         <SelectedMenu
           options={options}
           color={theme.palette.selectColor.main}
-          width={'160px'}
+          width={"160px"}
         />
       </Search>
       <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
@@ -110,9 +113,7 @@ const Header2 = () => {
             <ShoppingCartIcon />
           </StyledBadge>
         </IconButton>
-        <IconButton>
-          <PersonOutlineIcon />
-        </IconButton>
+        <ProfileLinks />
       </Stack>
     </Container>
   );
