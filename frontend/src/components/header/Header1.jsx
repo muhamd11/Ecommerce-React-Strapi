@@ -1,10 +1,8 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import SocialLinks from "./SocialLinks";
 import ColorIcon from "./ColorIcon";
-import SelectedMenu from "./SelectMenu";
 
 const Header1 = () => {
-  const options = ["EN", "AR"];
   return (
     <Box
       sx={{
@@ -42,7 +40,6 @@ const Header1 = () => {
           </Typography>
           <Box flexGrow={1} />
           <ColorIcon />
-          <SelectedMenu options={options} color width />
           <SocialLinks />
         </Stack>
       </Container>

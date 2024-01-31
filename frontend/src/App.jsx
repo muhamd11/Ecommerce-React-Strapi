@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline } from "@mui/material";
 import Hero from "./components/hero/Hero";
+import Products from "./components/products/Products";
+import Footer from "./components/footer/Footer";
+import ScrollToTop from "./components/scroll/ScrollToTop";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -17,13 +20,20 @@ function App() {
       // @ts-ignore
       value={colorMode}
     >
-      <ThemeProvider theme={theme}>
+      <ThemeProvider 
+// @ts-ignore
+      theme={theme}>
         <CssBaseline />
         <Header1 />
         <Header2 />
-        <Box bgcolor={theme.palette.bg.main}>
+        <Box bgcolor={theme.
+// @ts-ignore
+        palette.bg.main}>
           <Hero />
+          <Products />
         </Box>
+        <Footer/>
+        <ScrollToTop />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
