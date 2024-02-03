@@ -17,19 +17,18 @@ import { auth } from "../../firebase/config";
 import Button from "@mui/material/Button";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useGetCartQuery } from "../../redux/cart";
 
 const Header2 = () => {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
   const [user, setUser] = useState({});
-  const { data } = useGetCartQuery('carts');
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsUserSignedIn(!!user);
       setUser(user); // Check if user is signed in or not
     });
+    
     return () => unsubscribe(); // Unsubscribe on unmount
   }, []);
 
@@ -136,7 +135,7 @@ const Header2 = () => {
       {isUserSignedIn ? (
         <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
           <IconButton href="/cart" aria-label="cart">
-            <StyledBadge badgeContent={data?.data?.length} color="primary">
+            <StyledBadge badgeContent={4} color="primary">
               <ShoppingCartIcon />
             </StyledBadge>
           </IconButton>

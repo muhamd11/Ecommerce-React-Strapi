@@ -11,13 +11,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/config";
-import { useAddToCartMutation } from "../../redux/cart";
+
 
 const ProductDetails = ({ product }) => {
   const [selectedImg, setselectedImg] = useState(0);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
   const [user, setUser] = useState({});
-  const [addToCart, { error, isLoading, isSuccess }] = useAddToCartMutation();
+  
 
   const navigate = useNavigate();
 
@@ -35,16 +35,7 @@ const ProductDetails = ({ product }) => {
     return () => unsubscribe(); // Unsubscribe on unmount
   }, []);
 
-  const handleCart = () => {
-    if (isUserSignedIn) {
-      addToCart(data);
-      navigate('/cart')
-    } else {
-      navigate("/login");
-    }
-  };
 
-  
 
   return (
     <Box
@@ -127,7 +118,6 @@ const ProductDetails = ({ product }) => {
         <Button
           sx={{ mb: { xs: 1, sm: 0 }, textTransform: "capitalize" }}
           variant="contained"
-          onClick={handleCart}
         >
           <AddShoppingCartOutlined sx={{ mr: 1 }} fontSize="small" />
           Add To Cart

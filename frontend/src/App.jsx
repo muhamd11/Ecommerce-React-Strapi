@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignIn from "./components/auth/Signin";
 import MainPage from "./components/mainPage/MainPage";
 import Signup from "./components/auth/Signup";
-import Cart from "./components/cart/Cart";
+
 
 
 function App() {
@@ -31,7 +31,6 @@ function App() {
               <Route path="/" element={<MainPage/>}/>
               <Route path="/login" element={<SignIn />} />
               <Route path="/register" element={<Signup />} />
-              <Route path="/cart" element={<Cart />} />
             </Routes>
           </Box>
           <Footer />
