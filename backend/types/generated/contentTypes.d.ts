@@ -362,42 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'product';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    productImg: Attribute.Media;
-    productTitle: Attribute.String & Attribute.Required;
-    productPrice: Attribute.Float & Attribute.Required;
-    productDescription: Attribute.Text & Attribute.Required;
-    productRating: Attribute.Decimal & Attribute.Required;
-    productCategory: Attribute.Enumeration<['MEN', 'WOMEN']> &
-      Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -817,6 +781,69 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCartCart extends Schema.CollectionType {
+  collectionName: 'carts';
+  info: {
+    singularName: 'cart';
+    pluralName: 'carts';
+    displayName: 'cart';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Attribute.Email;
+    products: Attribute.Relation<
+      'api::cart.cart',
+      'oneToMany',
+      'api::product.product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    productImg: Attribute.Media;
+    productTitle: Attribute.String & Attribute.Required;
+    productPrice: Attribute.Float & Attribute.Required;
+    productDescription: Attribute.Text & Attribute.Required;
+    productRating: Attribute.Decimal & Attribute.Required;
+    productCategory: Attribute.Enumeration<['MEN', 'WOMEN']> &
+      Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -827,7 +854,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::product.product': ApiProductProduct;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -836,6 +862,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::cart.cart': ApiCartCart;
+      'api::product.product': ApiProductProduct;
     }
   }
 }

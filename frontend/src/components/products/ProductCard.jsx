@@ -60,7 +60,6 @@ const ProductCard = ({ product }) => {
         </Button>
         <Box flexGrow={1} />
         <Button size="small">
-          {" "}
           <Rating
             name="half-rating-read"
             value={product.attributes.productRating}

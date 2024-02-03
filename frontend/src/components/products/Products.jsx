@@ -14,30 +14,23 @@ import { useGetProductsQuery } from "../../redux/product";
 const Products = () => {
   const theme = useTheme();
 
-  const allProducts = 'products?populate=*'
-  const menProducts = 'products?populate=*&filters[productCategory][$eq]=MEN'
-  const womenProducts = 'products?populate=*&filters[productCategory][$eq]=WOMEN'
+  const allProducts = "products?populate=*";
+  const menProducts = "products?populate=*&filters[productCategory][$eq]=MEN";
+  const womenProducts =
+    "products?populate=*&filters[productCategory][$eq]=WOMEN";
 
-  const [selectedProducts, setSelectedProducts] = useState(allProducts)
- 
+  const [selectedProducts, setSelectedProducts] = useState(allProducts);
+
   const { data, error, isLoading } = useGetProductsQuery(selectedProducts);
 
   const handleChange = (event, newAlignment) => {
-    setSelectedProducts(newAlignment)
+    setSelectedProducts(newAlignment);
   };
   if (isLoading) {
-    return(
-      <Typography>
-        Loading.................
-      </Typography>
-    )
+    return <Typography>Loading.................</Typography>;
   }
   if (error) {
-    return(
-      <Typography>
-        {error.message}
-      </Typography>
-    )
+    return <Typography>{error.message}</Typography>;
   }
   if (data) {
     return (
@@ -95,7 +88,12 @@ const Products = () => {
           flexWrap={"wrap"}
         >
           {data.data.map((product) => {
-            return <ProductCard product={product} />;
+            return (
+              <ProductCard
+                product={product}
+                key={product.attributes.productTitle}
+              />
+            );
           })}
         </Stack>
       </Container>

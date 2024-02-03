@@ -13,8 +13,26 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SelectedMenu from "./SelectMenu";
 import { useTheme } from "@emotion/react";
 import ProfileLinks from "./AccountMenu";
+import { auth } from "../../firebase/config";
+import Button from "@mui/material/Button";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useGetCartQuery } from "../../redux/cart";
 
 const Header2 = () => {
+  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const [user, setUser] = useState({});
+  const { data } = useGetCartQuery('carts');
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsUserSignedIn(!!user);
+      setUser(user); // Check if user is signed in or not
+    });
+    return () => unsubscribe(); // Unsubscribe on unmount
+  }, []);
+
   const options = ["All Categories", "Men", "Women", "Kids"];
   const theme = useTheme();
 
@@ -77,7 +95,15 @@ const Header2 = () => {
         alignItems: "center",
       }}
     >
-      <Stack alignItems={"center"}>
+      <Button
+        href="/"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          "&:hover": { backgroundColor: "transparent" },
+          color: theme.palette.text.primary,
+        }}
+      >
         <ShoppingBasketIcon sx={{ fontSize: "30px" }} />
         <Typography
           variant="body2"
@@ -85,7 +111,7 @@ const Header2 = () => {
         >
           E-Commerce
         </Typography>
-      </Stack>
+      </Button>
       <Search
         sx={{
           borderRadius: "22px",
@@ -107,14 +133,25 @@ const Header2 = () => {
           width={"160px"}
         />
       </Search>
-      <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
-        <IconButton aria-label="cart">
-          <StyledBadge badgeContent={4} color="primary">
-            <ShoppingCartIcon />
-          </StyledBadge>
-        </IconButton>
-        <ProfileLinks />
-      </Stack>
+      {isUserSignedIn ? (
+        <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
+          <IconButton href="/cart" aria-label="cart">
+            <StyledBadge badgeContent={data?.data?.length} color="primary">
+              <ShoppingCartIcon />
+            </StyledBadge>
+          </IconButton>
+          <ProfileLinks user={user} />
+        </Stack>
+      ) : (
+        <Box display={"flex"} gap={3}>
+          <Button href="/login" variant="outlined" size="medium">
+            Sign In
+          </Button>
+          <Button href="/register" variant="outlined" size="medium">
+            Sign up
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 };

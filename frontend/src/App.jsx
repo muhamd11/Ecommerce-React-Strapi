@@ -4,10 +4,14 @@ import Header2 from "./components/header/Header2";
 import { useEffect } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline } from "@mui/material";
-import Hero from "./components/hero/Hero";
-import Products from "./components/products/Products";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./components/scroll/ScrollToTop";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SignIn from "./components/auth/Signin";
+import MainPage from "./components/mainPage/MainPage";
+import Signup from "./components/auth/Signup";
+import Cart from "./components/cart/Cart";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -16,24 +20,23 @@ function App() {
   }, []);
 
   return (
-    <ColorModeContext.Provider
-      // @ts-ignore
-      value={colorMode}
-    >
-      <ThemeProvider 
-// @ts-ignore
-      theme={theme}>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Header1 />
-        <Header2 />
-        <Box bgcolor={theme.
-// @ts-ignore
-        palette.bg.main}>
-          <Hero />
-          <Products />
-        </Box>
-        <Footer/>
-        <ScrollToTop />
+        <BrowserRouter>
+          <Header1 />
+          <Header2 />
+          <Box bgcolor={theme.palette.bg.main}>
+            <Routes>
+              <Route path="/" element={<MainPage/>}/>
+              <Route path="/login" element={<SignIn />} />
+              <Route path="/register" element={<Signup />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </Box>
+          <Footer />
+          <ScrollToTop />
+        </BrowserRouter>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
